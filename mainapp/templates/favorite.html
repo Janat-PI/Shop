@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mt-5" >
+          {% for product in favorite_product %}
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100" style="border-radius: 10px;">
+              <a href="{{ product.get_absolute_url }}" style="display: flex; justify-content: center; align-items: center;"><img class="card-img-top" style="height: 200px !important; width: initial" src="{{ product.image.url }}" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="{{ product.get_absolute_url }}">{{ product.title|truncatewords:3 }}</a>
+                </h4>
+                <h5>{{ product.price }} сом.</h5>
+                <a href="{% url 'add_to_cart' slug=product.slug %}">
+                  <button class="btn btn-danger">Добавить в корзину</button>
+                </a>
+                  {% if product.is_favorite %}
+                    <a href="{% url 'add-to-favorite' product.id %}">
+                        <i class="bi bi-star"></i>
+                    </a>
+                  {% else %}
+                      <a href="{% url 'add-to-favorite' product.id %}">
+                          <i class="bi bi-star-fill"></i>
+                      </a>
+                  {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+{% endblock content %}
